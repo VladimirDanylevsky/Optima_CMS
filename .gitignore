@@ -5,6 +5,8 @@ ehthumbs.db
 **/optima/db.sqlite3
 # Folder config file
 Desktop.ini
+.idea\\
+.idea\
 .idea/
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
