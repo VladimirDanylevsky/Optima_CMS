@@ -1,10 +1,11 @@
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
-
+#DB
+db.sqlite3
 # Folder config file
 Desktop.ini
-
+.idea
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
