@@ -99,12 +99,12 @@
 				<div class='space-between'></div>
 
 				<ol class="breadcrumb d-inline-flex p-2 h6 wow fadeIn" data-wow-delay="0.7s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeIn;">
-					<li class="breadcrumb-item"><a href="#">Головна</a></li>
-					<li class="breadcrumb-item"><a href="#">Каталог</a></li>
-					<li class="breadcrumb-item"><a href="#">Виробник №1</a></li>
-					<li class="breadcrumb-item"><a href="#">Група товарів №1</a> </li>
-					<li class="breadcrumb-item active disabled">Продукт</li>
-					{{ page.url }}
+					{% for ancestors in page.get_ancestors %}
+					{% if ancestors.specific.title != 'Root' %}
+					<li class="breadcrumb-item"><a href="{{ ancestors.specific.url }}">{{ ancestors.specific.title }}</a></li>
+					{% endif %}
+					{% endfor %}
+					<li class="breadcrumb-item"><a href="#">{{ page.title }}</a></li>
 				</ol>
 				<div class="dropdown-divider optima-light-color wow fadeIn" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeIn;"></div>
 				<section id="productDetails">

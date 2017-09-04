@@ -19,6 +19,14 @@ class CatalogIndexPage(Page):
         verbose_name = "Сторінка каталогу виробника, або можете " \
                        "використати як вкладений каталог (Вкладений каталог)"
 
+    def simple_pagination(self, elements=3):
+        products = self.get_children()
+        if len(products) == 0:
+            return None
+        if len(products) < elements+1:
+            return products
+        return grouper(elements, products, fillvalue=None)
+    
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
     ]
