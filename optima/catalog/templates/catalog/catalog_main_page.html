@@ -93,70 +93,60 @@
     <main>
         <!-- First container -->
         <div class="container">
-            <div class="space-between-md">
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                <div class="toc-wrapper pinned" style="top: 0px;">
-                    <div style="height: 15px;"></div>
-							<ul class="table-of-contents textarea">
-							{% for child_page in page.get_children %}
-                            <li><a href="#{{ child_page.specific.pk }}">{{child_page.specific.title}}</a></li>
-							{% endfor %}
-                        </ul>
-                </div>
-            </div>
-                <!-- Content -->
-                <div class="col-md-9">
-                    <!-- Products List -->
-                    <section class="section">
-                        <!-- Single Product -->
-						{% for child_page in page.get_children %}
-                        <div class="row">
-                            <!-- First column-->
-                            <div class="col-lg-5 mb-r">
-                                <!--Featured image-->
-                                <div id='{{ child_page.specific.pk }}' class="view overlay hm-white-slight z-depth-1 scrollspy">
-									{% image child_page.specific.main_image width-800 height-800 as category_image %}
-                                    <img src="{{ category_image.url }}" class="img-fluid">
-                                    <a href="{{ child_page.specific.url }}" data-toggle="modal" data-target="#quick-look-ex">
-                                        <div class="mask waves-light waves-effect waves-light">
-                                        </div>
-                                    </a>
-                                </div>
+            <!--Section: about-->
+            <br id="catalog">
+            <section class="section">
+
+                <div class='space-between'></div>
+
+                <!-- First row -->
+                <div class="row">
+					{% for page_child in page.get_children %}
+                    <!-- First column -->
+                    <div class="col-lg-4 col-md-12 wow fadeIn" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeIn;">
+
+                        <!-- Card -->
+                        <div class="card card-cascade narrower same-height hoverable">
+
+                            <!-- Card image -->
+                            <div class="view overlay hm-white-slight z-depth-1">
+								{% image page_child.specific.main_image fill-900x600-c20 format-jpeg as tmp_picture %} 
+                                <a href="{{ page_child.specific.url }}"><img src="{{ tmp_picture.url }}" class="img-fluid rounded-top" alt=""></a>
+                                <a>
+                                    <div class="waves-light waves-effect waves-light"></div>
+                                </a>
                             </div>
-                            <!-- /.First column -->
+                            <!-- /.Card image -->
 
-                            <!-- Second column -->
-                            <div class="col-lg-7 mb-r">
+                            <!-- Card content -->
+                            <div class="card-body text-center">
 
-                                <!-- Excerpt -->
-                                <h4><a href="{{ child_page.specific.url }}">{{ child_page.specific.title }} </a></h4>
+                                <!-- Category & Title -->
+                                <a href="{{ page_child.specific.url }}" class="text-muted"><h5>{{ page_child.specific.sphere }}</h5></a>
+                                <h4 class="card-title"><strong><a href="{{ page_child.specific.url }}">{{ page_child.specific.short_title }}</a></strong></h4>
 
-                                <!-- Product Description -->
-                                <p>{{ child_page.specific.description|richtext }}</p>
-
-                                <!-- Buttons -->
-                                <a href="{{ child_page.specific.url }}" class="btn btn-secondary waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to Wishlist">Дізнатися більше про {{ child_page.specific.title }}</a>
-
-                                <!-- /.Buttons -->
+                                <!-- Description -->
+                                <p class="card-text same-height-text">{{ page_child.specific.description|richtext }}
+                                </p>
+                                <a href="{{ page_child.specific.url }}"><button type="button" class="btn btn-outline-default waves-effect btn-lg">Перейти до каталогу {{ page_child.specific.short_title }}</button></a>
 
                             </div>
-                            <!-- /.Second column -->
+                            <!-- /.Card content -->
 
                         </div>
-						{% endfor %}
+                        <!-- /.Card -->
 
-                    </section>
-                    <!-- /.Products List -->
+                    </div>
+					{% endfor %}
+                        <!-- /.Card -->
+
+                    </div>
+                    <!-- /.Third column -->
 
                 </div>
-                <!-- /.Content -->
+                <!-- /.First row -->
 
-                <!-- Sidebar -->
-            </div>
-            <!-- /.Content -->
-        <div class="space-between"></div>
+            </section>
         </div>
         <!-- End of first container-->
         <!-- Education streak-->
@@ -225,6 +215,19 @@
                 <!--/Third column-->
 
             </div>
+            <div class="row mt-2 mb-1 text-center wow fadeIn" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeIn;">
+                <div class="col-md-8">
+                    <div class="card">
+
+                        <div class="view overlay hm-white-slight">
+                            <div id="map">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
             <!--/Second row-->
 
         </div>
@@ -247,7 +250,6 @@
     <script type="text/javascript" src="{% static 'catalog/js/mdb.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'catalog/js/popper.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'catalog/js/jquery.matchHeight.js' %}"></script>
-    <script type="text/javascript" src="{% static 'catalog/js/materialize.min.js' %}"></script>
     <script>
         //Animation init
         new WOW().init();
@@ -258,9 +260,6 @@
         });
         $(function() {
             $('.same-height-text').matchHeight();
-        });
-        $(document).ready(function(){
-        $('.scrollspy').scrollSpy();
         });
     </script>
 
