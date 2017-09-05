@@ -12,19 +12,52 @@ from wagtail.wagtailsearch import index
 
 from more_itertools import grouper
 
+
 class CatalogIndexPage(Page):
-    intro = RichTextField(blank=False)
+    sphere = models.CharField(blank=False, max_length=90, default='Medicine')
+    description = RichTextField(blank=False)
+    short_title = models.CharField(blank=False, max_length=90, default='Manufacturer')
 
     class Meta:
         verbose_name = "Сторінка каталогу виробника, або можете " \
                        "використати як вкладений каталог (Вкладений каталог)"
 
+    def main_image(self):
+        gallery_item = self.gallery_images.first()
+        if gallery_item:
+            return gallery_item.image
+        else:
+            return None
+
+    def simple_pagination(self, elements=3):
+        products = self.get_children()
+        if len(products) == 0:
+            return None
+        if len(products) < elements+1:
+            return products
+        return grouper(elements, products, fillvalue=None)
+
     search_fields = Page.search_fields + [
-        index.SearchField('intro'),
+        index.SearchField('description'),
+        index.SearchField('short_title'),
     ]
 
     content_panels = Page.content_panels + [
-        FieldPanel('intro', classname="full")
+        FieldPanel('sphere', classname="full"),
+        FieldPanel('short_title', classname="full"),
+        FieldPanel('description', classname="full"),
+        InlinePanel('gallery_images', label="Галерея зображень")
+    ]
+
+
+class CatalogIndexPageGalleryImage(Orderable):
+    page = ParentalKey(CatalogIndexPage, related_name='gallery_images')
+    image = models.ForeignKey(
+        'wagtailimages.Image', on_delete=models.CASCADE, related_name='+'
+    )
+
+    panels = [
+        ImageChooserPanel('image'),
     ]
 
 

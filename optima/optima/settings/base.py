@@ -144,3 +144,4 @@ BASE_URL = 'http://example.com'
 
 # Make high-quality images
 WAGTAILIMAGES_JPEG_QUALITY = 90
+ALLOWED_HOSTS = ['*']
